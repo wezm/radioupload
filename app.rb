@@ -21,6 +21,10 @@ module Radiopaedia
         halt 406,  {'Content-Type' => 'text/plain'}, "Content-Length is too small to be an image"
       end
 
+      if request.content_length.to_i > 2097152 # 2Mb
+        halt 406,  {'Content-Type' => 'text/plain'}, "Content-Length is too big, should be less than 2Mb"
+      end
+
       if !file.dirname.exist?
         file.dirname.mkpath
       end
